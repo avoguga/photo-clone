@@ -26,7 +26,7 @@ const defaultOptions = [
   },
   {
     name: 'Saturação',
-    property: 'saturation',
+    property: 'saturate',
     value: 100,
     range: {
       min: 0,
@@ -88,14 +88,22 @@ function App() {
       return prevOptions.map((option, index) => {
         if(index !== selectedOptionIndex) return option
         return { ...option, value: target.value }
-        
+
       })
     })
   }
 
+  function getImageStyle() {
+    const filters = options.map(option => {
+      return `${option.property}(${option.value}${option.unit})`
+    })
+
+    return { filter: filters.join(' ')}
+  }
+
   return (
     <div className="container">
-      <div className="main-image"/>
+      <div className="main-image" style={getImageStyle()}/>
       <div className="sidebar">
         {options.map((option, index) => {
           return (
