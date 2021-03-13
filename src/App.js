@@ -3,7 +3,7 @@ import './Style.css';
 import Slider from './Slider';
 import SidebarItem from './SidebarItem';
 
-const defaultOptions = [
+const DEFAULT_OPTIONS = [
   {
     name: 'Brilho',
     property: 'brightness',
@@ -66,7 +66,7 @@ const defaultOptions = [
   },
   {
     name: 'Blur',
-    property: 'Blur',
+    property: 'blur',
     value: 0,
     range: {
       min: 0,
@@ -80,11 +80,11 @@ const defaultOptions = [
 function App() {
 
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
-  const [options, setOptions] = useState(defaultOptions)
+  const [options, setOptions] = useState(DEFAULT_OPTIONS)
   const selectedOption = options[selectedOptionIndex]
 
   function handleSliderChange({target}){
-    setOptions(prevOption =>{
+    setOptions(prevOptions =>{
       return prevOptions.map((option, index) => {
         if(index !== selectedOptionIndex) return option
         return { ...option, value: target.value }
@@ -100,6 +100,8 @@ function App() {
 
     return { filter: filters.join(' ')}
   }
+
+  console.log(getImageStyle())
 
   return (
     <div className="container">
@@ -120,10 +122,10 @@ function App() {
       min={selectedOption.range.min}
       max={selectedOption.range.max}
       value={selectedOption.value}
-      handleClick={handleSliderChange}
+      handleChange={handleSliderChange}
       />
     </div>
-  );
+  )
 }
 
 export default App;
