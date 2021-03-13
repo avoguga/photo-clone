@@ -2,6 +2,6 @@ import React from 'react'
 
 export default function SidebarItem(){
     return(
-        <button className="sidebar-item active">Siderbar Item</button>
+        <button className="sidebar-item">Siderbar Item</button>
     )
 }
