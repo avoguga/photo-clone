@@ -78,14 +78,42 @@ const defaultOptions = [
 
 
 function App() {
+
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(0)
+  const [options, setOptions] = useState(defaultOptions)
+  const selectedOption = options[selectedOptionIndex]
+
+  function handleSliderChange({target}){
+    setOptions(prevOption =>{
+      return prevOptions.map((option, index) => {
+        if(index !== selectedOptionIndex) return option
+        return { ...option, value: target.value }
+        
+      })
+    })
+  }
+
   return (
     <div className="container">
       <div className="main-image"/>
       <div className="sidebar">
-        <SidebarItem/>
-        <SidebarItem/>
+        {options.map((option, index) => {
+          return (
+            <SidebarItem
+              key={index}
+              name={option.name}
+              active={index === selectedOptionIndex}
+              handleClick={() => setSelectedOptionIndex(index)}
+            />
+          )
+        })}
       </div>
-      <Slider/>
+      <Slider
+      min={selectedOption.range.min}
+      max={selectedOption.range.max}
+      value={selectedOption.value}
+      handleClick={handleSliderChange}
+      />
     </div>
   );
 }
